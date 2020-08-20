@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Image } from 'react-native';
+import { Provider } from 'react-redux';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import { Ionicons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import Gate from './components/Gate';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import store, { persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // args : image array
 const cacheImages = (images) =>
@@ -40,7 +41,9 @@ export default function App() {
   };
   return isReady ? (
     <Provider store={store}>
-      <Gate />
+      <PersistGate persistor={persistor}>
+        <Gate />
+      </PersistGate>
     </Provider>
   ) : (
     <AppLoading

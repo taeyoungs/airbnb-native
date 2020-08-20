@@ -10,7 +10,7 @@ export default () => {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {isLoggedIn ? (
         <TouchableOpacity onPress={() => dispatch(logOut())}>
-          <Text>Log Out | {token}</Text>
+          <Text>Log Out</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
