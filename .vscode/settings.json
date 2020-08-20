@@ -1,0 +1,12 @@
+{
+  "prettier.bracketSpacing": true,
+  "javascript.format.enable": false,
+  "editor.formatOnSave": true,
+  "prettier.javascriptEnable": ["javascript", "javascriptreact"],
+  "prettier.singleQuote": true,
+  "prettier.semi": true,
+  "prettier.useTabs": false,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "all",
+  "prettier.printWidth": 80
+}
