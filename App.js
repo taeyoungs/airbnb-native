@@ -4,6 +4,9 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import { Ionicons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
+import Gate from './components/Gate';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 // args : image array
 const cacheImages = (images) =>
@@ -36,9 +39,9 @@ export default function App() {
     return Promise.all(...promiseImages, ...promiseFonts);
   };
   return isReady ? (
-    <View>
-      <Text>I'm Ready</Text>
-    </View>
+    <Provider store={store}>
+      <Gate />
+    </Provider>
   ) : (
     <AppLoading
       onError={console.error}
