@@ -12,6 +12,8 @@ import { StatusBar } from 'react-native';
 import InputForm from '../components/Auth/InputForm';
 import Social from '../components/Auth/Social';
 import colors from '../colors';
+import api, { createAccount, getRooms } from '../api';
+import { isEmail } from '../utils';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -31,13 +33,48 @@ const InputContainer = styled.View`
   width: ${windowWidth / 1.3};
 `;
 
-export default () => {
+export default ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFistName] = useState('');
   const [lastName, setLastName] = useState('');
-  const handleSubmit = () => {
-    alert(lastName);
+  const validateForm = () => {
+    if (
+      email === '' ||
+      password === '' ||
+      firstName === '' ||
+      lastName === ''
+    ) {
+      alert('All fields are required');
+      return false;
+    }
+
+    if (!isEmail(email)) {
+      alert('Email format is wrong');
+      return false;
+    }
+    return true;
+  };
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    try {
+      const { status } = await api.createAccount({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        username: email,
+        password,
+      });
+      // const data = await getRooms();
+      console.log(status);
+      if (status === 201) {
+        alert('Account created. Sign in, please.');
+        navigation.navigate('SignIn', { email, password });
+      }
+    } catch (error) {
+      console.warn(error);
+    }
   };
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

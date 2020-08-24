@@ -26,9 +26,9 @@ const InputContainer = styled.View`
   margin-bottom: 30px;
 `;
 
-export default ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default ({ navigation, route: { params } }) => {
+  const [email, setEmail] = useState(params?.email);
+  const [password, setPassword] = useState(params?.password);
   const goToSignUp = () => navigation.navigate('SignUp');
   const handleSubmit = () => {};
   return (
