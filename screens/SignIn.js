@@ -6,6 +6,9 @@ import { StatusBar } from 'react-native';
 import InputForm from '../components/Auth/InputForm';
 import Social from '../components/Auth/Social';
 import colors from '../colors';
+import { isEmail } from '../utils';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../redux/usersSlice';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -29,8 +32,31 @@ const InputContainer = styled.View`
 export default ({ navigation, route: { params } }) => {
   const [email, setEmail] = useState(params?.email);
   const [password, setPassword] = useState(params?.password);
+  const dispatch = useDispatch();
   const goToSignUp = () => navigation.navigate('SignUp');
-  const handleSubmit = () => {};
+  const isFormValid = () => {
+    if (email === '' || password === '') {
+      alert('All fields are required');
+      return false;
+    }
+
+    if (!isEmail(email)) {
+      alert('Email format is wrong');
+      return false;
+    }
+    return true;
+  };
+  const handleSubmit = () => {
+    if (!isFormValid) {
+      return;
+    }
+    dispatch(
+      userLogin({
+        username: email,
+        password,
+      }),
+    );
+  };
   return (
     <Container>
       <StatusBar barStyle="dark-content" />

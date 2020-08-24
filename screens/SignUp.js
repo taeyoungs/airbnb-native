@@ -38,7 +38,7 @@ export default ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [firstName, setFistName] = useState('');
   const [lastName, setLastName] = useState('');
-  const validateForm = () => {
+  const isFormValid = () => {
     if (
       email === '' ||
       password === '' ||
@@ -56,7 +56,7 @@ export default ({ navigation }) => {
     return true;
   };
   const handleSubmit = async () => {
-    if (!validateForm()) return;
+    if (!isFormValid()) return;
 
     try {
       const { status } = await api.createAccount({
