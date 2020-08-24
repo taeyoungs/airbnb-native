@@ -29,10 +29,11 @@ const cacheFonts = (fonts) =>
 export default function App() {
   const [isReady, setIsReady] = useState(false);
   const handleFinish = () => setIsReady(true);
-  const loadAsync = async () => {
+  const loadAsync = () => {
     const images = [
       require('./assets/loadingBg.jpeg'),
-      'https://www.clipartmax.com/png/middle/114-1149625_executive-airbnb-cleaning-airbnb-logo-png.png',
+      require('./assets/airbnb-logo.png'),
+      'https://banner2.cleanpng.com/20180406/taw/kisspng-airbnb-accommodation-business-vacation-rental-logo-vactor-5ac74f0cc3cce5.809691751523011340802.jpg',
     ];
     const fonts = [Ionicons.font];
     promiseImages = cacheImages(images);
