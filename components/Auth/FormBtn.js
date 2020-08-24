@@ -9,14 +9,12 @@ const Container = styled.View`
   width: 100%;
   border-radius: 15px;
   padding: 15px 0px;
-  margin-bottom: 20px;
   border: 1px solid ${(props) => (props.accent ? colors.red : colors.black)};
 `;
 
 const Txt = styled.Text`
   color: ${(props) => (props.accent ? 'white' : colors.black)};
   text-align: center;
-  font-size: 16px;
 `;
 
 export const FormBtn = ({ accent = false, title, onPress }) => {

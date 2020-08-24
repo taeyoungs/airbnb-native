@@ -17,13 +17,8 @@ const Container = styled.View`
 const Logo = styled.Image`
   width: 150px;
   height: 40px;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
   margin-top: 100px;
-`;
-
-const Notice = styled.Text`
-  font-size: 17px;
-  margin-bottom: 25px;
 `;
 
 const InputContainer = styled.View`
@@ -41,7 +36,6 @@ export default ({ navigation }) => {
       <StatusBar barStyle="dark-content" />
       <Logo source={require('../assets/airbnb-logo-txt.png')} />
       <InputContainer>
-        <Notice>Login to your Account</Notice>
         <InputForm
           placeholder="Email"
           value={email}
@@ -56,7 +50,7 @@ export default ({ navigation }) => {
         />
         <FormBtn accent={true} title="Sign In" onPress={handleSubmit} />
         <Text
-          style={{ color: 'grey', textAlign: 'center', marginVertical: 25 }}
+          style={{ color: 'grey', textAlign: 'center', marginVertical: 40 }}
         >
           - Or sign in with -
         </Text>

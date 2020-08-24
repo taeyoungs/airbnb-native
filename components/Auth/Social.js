@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../colors';
-import { Text, View } from 'react-native';
+import { Text, View, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 
+const windowWidth = Dimensions.get('window').width;
+
 const Container = styled.View`
-  width: 100%;
+  width: ${windowWidth / 1.3};
   flex: 1;
   flex-direction: row;
   margin-bottom: 50px;
@@ -25,7 +27,7 @@ const Social = () => {
         style={{
           ...colors.shadow,
           width: '45%',
-          marginHorizontal: 5,
+          marginHorizontal: 10,
           height: 50,
         }}
       >
