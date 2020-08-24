@@ -4,13 +4,10 @@ import PropTypes from 'prop-types';
 import { TouchableOpacity, Dimensions } from 'react-native';
 import colors from '../../colors';
 
-const windowWidth = Dimensions.get('window').width;
-// const windowHeight = Dimensions.get('window').height;
-
 const Container = styled.View`
   background-color: ${(props) => (props.accent ? colors.red : 'transparent')};
-  width: ${windowWidth / 1.5}px;
-  border-radius: 30px;
+  width: 100%;
+  border-radius: 15px;
   padding: 15px 0px;
   margin-bottom: 20px;
   border: 1px solid ${(props) => (props.accent ? colors.red : colors.black)};
@@ -19,19 +16,20 @@ const Container = styled.View`
 const Txt = styled.Text`
   color: ${(props) => (props.accent ? 'white' : colors.black)};
   text-align: center;
+  font-size: 16px;
 `;
 
-export const Btn = ({ accent = false, title, onPress }) => {
+export const FormBtn = ({ accent = false, title, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Container accent={accent}>
+      <Container accent={accent} style={{ ...colors.shadow }}>
         <Txt accent={accent}>{title}</Txt>
       </Container>
     </TouchableOpacity>
   );
 };
 
-Btn.propTypes = {
+FormBtn.propTypes = {
   accent: PropTypes.bool,
   title: PropTypes.string,
   onPress: PropTypes.func,

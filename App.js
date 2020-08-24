@@ -33,6 +33,7 @@ export default function App() {
     const images = [
       require('./assets/loadingBg.jpeg'),
       require('./assets/airbnb-logo.png'),
+      require('./assets/airbnb-logo-txt.png'),
       'https://banner2.cleanpng.com/20180406/taw/kisspng-airbnb-accommodation-business-vacation-rental-logo-vactor-5ac74f0cc3cce5.809691751523011340802.jpg',
     ];
     const fonts = [Ionicons.font];

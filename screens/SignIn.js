@@ -1,15 +1,79 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { View, Text } from 'react-native';
-import { Btn } from '../components/Auth/Btn';
+import { Text, Dimensions } from 'react-native';
+import { FormBtn } from '../components/Auth/FormBtn';
 import { StatusBar } from 'react-native';
+import InputForm from '../components/Auth/InputForm';
+import Social from '../components/Auth/Social';
+import colors from '../colors';
 
-const Container = styled.View``;
+const windowWidth = Dimensions.get('window').width;
 
-export default () => {
+const Container = styled.View`
+  flex: 1;
+  align-items: center;
+`;
+
+const Logo = styled.Image`
+  width: 150px;
+  height: 40px;
+  margin-bottom: 50px;
+  margin-top: 100px;
+`;
+
+const Notice = styled.Text`
+  font-size: 17px;
+  margin-bottom: 25px;
+`;
+
+const InputContainer = styled.View`
+  width: ${windowWidth / 1.3};
+  margin-bottom: 30px;
+`;
+
+export default ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const goToSignUp = () => navigation.navigate('SignUp');
+  const handleSubmit = () => {};
   return (
     <Container>
       <StatusBar barStyle="dark-content" />
+      <Logo source={require('../assets/airbnb-logo-txt.png')} />
+      <InputContainer>
+        <Notice>Login to your Account</Notice>
+        <InputForm
+          placeholder="Email"
+          value={email}
+          setValue={setEmail}
+          keyboardType="email-address"
+        />
+        <InputForm
+          placeholder="Password"
+          value={password}
+          setValue={setPassword}
+          secureTextEntry={true}
+        />
+        <FormBtn accent={true} title="Sign In" onPress={handleSubmit} />
+        <Text
+          style={{ color: 'grey', textAlign: 'center', marginVertical: 25 }}
+        >
+          - Or sign in with -
+        </Text>
+        <Social />
+        <Text
+          style={{ color: 'grey', textAlign: 'center', marginVertical: 25 }}
+        >
+          Don't have an account?
+          <Text
+            style={{ color: colors.teal, fontWeight: '600' }}
+            onPress={goToSignUp}
+          >
+            {' '}
+            Sign Up
+          </Text>
+        </Text>
+      </InputContainer>
     </Container>
   );
 };
