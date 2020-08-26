@@ -17,7 +17,7 @@ const Txt = styled.Text`
   text-align: center;
 `;
 
-export const FormBtn = ({ accent = false, title, onPress }) => {
+const FormBtn = ({ accent = false, title, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Container accent={accent} style={{ ...colors.shadow }}>
@@ -32,3 +32,5 @@ FormBtn.propTypes = {
   title: PropTypes.string,
   onPress: PropTypes.func,
 };
+
+export default FormBtn;

@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Text, Dimensions, StatusBar } from 'react-native';
 import styled from 'styled-components/native';
-import { FormBtn } from '../../components/Auth/FormBtn';
-import InputForm from '../../components/Auth/InputForm';
-import Social from '../../components/Auth/Social';
-import colors from '../../colors';
-import utils from '../../utils';
-import { userLogin } from '../../redux/usersSlice';
+import FormBtn from '../../../components/Auth/FormBtn';
+import InputForm from '../../../components/Auth/InputForm';
+import Social from '../../../components/Auth/Social';
+import colors from '../../../colors';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -28,38 +25,18 @@ const InputContainer = styled.View`
   margin-bottom: 30px;
 `;
 
-export default ({ navigation, route: { params } }) => {
-  const [email, setEmail] = useState(params?.email || 'xoxodudwkd@naver.com');
-  const [password, setPassword] = useState(params?.password || '12345');
-  const dispatch = useDispatch();
-  const goToSignUp = () => navigation.navigate('SignUp');
-  const isFormValid = () => {
-    if (email === '' || password === '') {
-      alert('All fields are required');
-      return false;
-    }
-
-    if (!utils.isEmail(email)) {
-      alert('Email format is wrong');
-      return false;
-    }
-    return true;
-  };
-  const handleSubmit = () => {
-    if (!isFormValid) {
-      return;
-    }
-    dispatch(
-      userLogin({
-        username: email,
-        password,
-      }),
-    );
-  };
+export default ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  goToSignUp,
+  handleSubmit,
+}) => {
   return (
     <Container>
       <StatusBar barStyle="dark-content" />
-      <Logo source={require('../../assets/airbnb-logo-txt.png')} />
+      <Logo source={require('../../../assets/airbnb-logo-txt.png')} />
       <InputContainer>
         <InputForm
           placeholder="Email"
