@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { StatusBar } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { Btn } from '../components/Auth/Btn';
+import { Btn } from '../../components/Auth/Btn';
 
 const Container = styled.View`
   flex: 1;
@@ -29,10 +29,10 @@ export default ({ navigation }) => {
   return (
     <Container>
       <StatusBar barStyle="light-content" />
-      <BgView source={require('../assets/loadingBg.jpeg')} />
+      <BgView source={require('../../assets/loadingBg.jpeg')} />
       <BlurView
         tint="light"
-        intensity={30}
+        intensity={45}
         style={{
           flex: 1,
           width: '100%',
@@ -40,7 +40,7 @@ export default ({ navigation }) => {
           justifyContent: 'center',
         }}
       >
-        <Logo source={require('../assets/airbnb-logo.png')} />
+        <Logo source={require('../../assets/airbnb-logo.png')} />
         <Btn title="Sign Up" accent={true} onPress={goToSignUp} />
         <Btn title="Sign In" onPress={goToSignIn} />
       </BlurView>

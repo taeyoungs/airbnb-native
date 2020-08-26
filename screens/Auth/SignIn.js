@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Text, Dimensions } from 'react-native';
-import { FormBtn } from '../components/Auth/FormBtn';
-import { StatusBar } from 'react-native';
-import InputForm from '../components/Auth/InputForm';
-import Social from '../components/Auth/Social';
-import colors from '../colors';
-import { isEmail } from '../utils';
 import { useDispatch } from 'react-redux';
-import { userLogin } from '../redux/usersSlice';
+import { Text, Dimensions, StatusBar } from 'react-native';
+import styled from 'styled-components/native';
+import { FormBtn } from '../../components/Auth/FormBtn';
+import InputForm from '../../components/Auth/InputForm';
+import Social from '../../components/Auth/Social';
+import colors from '../../colors';
+import utils from '../../utils';
+import { userLogin } from '../../redux/usersSlice';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -30,8 +29,8 @@ const InputContainer = styled.View`
 `;
 
 export default ({ navigation, route: { params } }) => {
-  const [email, setEmail] = useState(params?.email);
-  const [password, setPassword] = useState(params?.password);
+  const [email, setEmail] = useState(params?.email || 'xoxodudwkd@naver.com');
+  const [password, setPassword] = useState(params?.password || '12345');
   const dispatch = useDispatch();
   const goToSignUp = () => navigation.navigate('SignUp');
   const isFormValid = () => {
@@ -40,7 +39,7 @@ export default ({ navigation, route: { params } }) => {
       return false;
     }
 
-    if (!isEmail(email)) {
+    if (!utils.isEmail(email)) {
       alert('Email format is wrong');
       return false;
     }
@@ -60,7 +59,7 @@ export default ({ navigation, route: { params } }) => {
   return (
     <Container>
       <StatusBar barStyle="dark-content" />
-      <Logo source={require('../assets/airbnb-logo-txt.png')} />
+      <Logo source={require('../../assets/airbnb-logo-txt.png')} />
       <InputContainer>
         <InputForm
           placeholder="Email"
@@ -81,9 +80,7 @@ export default ({ navigation, route: { params } }) => {
           - Or sign in with -
         </Text>
         <Social />
-        <Text
-          style={{ color: 'grey', textAlign: 'center', marginVertical: 25 }}
-        >
+        <Text style={{ color: 'grey', textAlign: 'center', marginTop: 35 }}>
           Don't have an account?
           <Text
             style={{ color: colors.teal, fontWeight: '600' }}

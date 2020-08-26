@@ -27,8 +27,12 @@ export const userLogin = (form) => async (dispatch) => {
       dispatch(logIn({ token }));
     }
   } catch (error) {
-    console.warn(error);
-    alert('Wrong email/password');
+    if (error.message === 'Request failed with status code 401')
+      alert('User does not exists');
+    else {
+      alert('Wrong email/password');
+    }
+    console.warn(`${error.name} ${error.message}`);
   }
 };
 

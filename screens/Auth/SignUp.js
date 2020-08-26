@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import {
   Text,
   Dimensions,
@@ -7,13 +7,13 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import { FormBtn } from '../components/Auth/FormBtn';
+import { FormBtn } from '../../components/Auth/FormBtn';
 import { StatusBar } from 'react-native';
-import InputForm from '../components/Auth/InputForm';
-import Social from '../components/Auth/Social';
-import colors from '../colors';
-import api, { createAccount, getRooms } from '../api';
-import { isEmail } from '../utils';
+import InputForm from '../../components/Auth/InputForm';
+import Social from '../../components/Auth/Social';
+import colors from '../../colors';
+import api from '../../api';
+import utils from '../../utils';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -49,7 +49,7 @@ export default ({ navigation }) => {
       return false;
     }
 
-    if (!isEmail(email)) {
+    if (!utils.isEmail(email)) {
       alert('Email format is wrong');
       return false;
     }
@@ -80,7 +80,7 @@ export default ({ navigation }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Container>
         <StatusBar barStyle="dark-content" />
-        <Logo source={require('../assets/airbnb-logo-txt.png')} />
+        <Logo source={require('../../assets/airbnb-logo-txt.png')} />
         <KeyboardAvoidingView behavior="position">
           <InputContainer>
             <InputForm

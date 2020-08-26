@@ -5,10 +5,10 @@ const callApi = async (method, path, data, jwt) => {
     Authorization: jwt,
     'Content-Type': 'application/json',
   };
-  const baseUrl = 'http://172.20.10.3:8000/api/v1/';
+  const baseUrl = 'http://172.30.1.20:8000/api/v1/';
   const fullUrl = `${baseUrl}${path}`;
 
-  console.log(`${method} ${fullUrl} ${data}`);
+  // console.log(`${method} ${fullUrl} ${data}`);
 
   if (method === 'get' || method === 'delete') {
     return axios[method](fullUrl, { headers });

@@ -2,6 +2,7 @@ export default {
   red: '#FF5A60',
   black: 'rgb(34, 34, 34)',
   teal: '#429F9E',
+  lightGrey: 'rgba(0, 0, 0, 0.3)',
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
