@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import SavedPresenter from './SavedPresenter';
 
-export default ({ getFavs }) => {
-  //   console.log(props);
+export default ({ getFavs, rooms }) => {
+  // console.log(rooms);
   useEffect(() => {
     getFavs();
   }, []);
-  return <SavedPresenter />;
+  return <SavedPresenter rooms={rooms} />;
 };

@@ -20,7 +20,10 @@ const callApi = async (method, path, data, jwt) => {
 export default {
   createAccount: (form) => callApi('post', 'users/', form),
   token: (form) => callApi('post', 'users/token/', form),
-  rooms: (page = 1) => callApi('get', `rooms/?page=${page}`),
+  rooms: (page = 1, token) =>
+    callApi('get', `rooms/?page=${page}`, null, token),
   favs: (pk) => callApi('get', `users/${pk}/favs`),
+  toggleFav: (pk, roomId, token) =>
+    callApi('put', `users/${pk}/favs/`, { pk: roomId }, token),
 };
 // export const getRooms = () => callApi('get', 'rooms/');

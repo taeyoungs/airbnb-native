@@ -4,12 +4,12 @@ import { getFavs } from '../../../redux/usersSlice';
 
 function mapDispatchToProps(dispatch) {
   return {
-    getFavs: (pk) => dispatch(getFavs(pk)),
+    getFavs: () => dispatch(getFavs()),
   };
 }
 
-// function mapStateToProps(state) {
-//   return { ...state.usersReducer };
-// }
+function mapStateToProps(state) {
+  return { rooms: state.roomsReducer.favs };
+}
 
-export default connect(null, mapDispatchToProps)(SavedContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedContainer);
