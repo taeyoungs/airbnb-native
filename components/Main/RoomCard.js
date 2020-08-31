@@ -35,7 +35,6 @@ const Name = styled.Text`
 `;
 
 const PriceContainer = styled.View`
-  flex: 1;
   flex-direction: row;
 `;
 
@@ -91,7 +90,7 @@ const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
             controlsProps={{
               PrevComponent: () => null,
               NextComponent: () => null,
-              dotActiveStyle: { backgroundColor: colors.red },
+              dotActiveStyle: { backgroundColor: 'white' },
               dotProps: {
                 badgeStyle: {
                   backgroundColor: colors.lightGrey,

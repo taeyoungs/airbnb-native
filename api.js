@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const callApi = async (method, path, data, jwt) => {
   const headers = {
-    Authorization: jwt,
+    Authorization: jwt != null ? `Bearer ${jwt}` : null,
     'Content-Type': 'application/json',
   };
-  const baseUrl = 'http://172.30.1.27:8000/api/v1/';
+  const baseUrl = 'http://192.168.0.25:8000/api/v1/';
   const fullUrl = `${baseUrl}${path}`;
 
   // console.log(`${method} ${fullUrl} ${data}`);
@@ -21,5 +21,6 @@ export default {
   createAccount: (form) => callApi('post', 'users/', form),
   token: (form) => callApi('post', 'users/token/', form),
   rooms: (page = 1) => callApi('get', `rooms/?page=${page}`),
+  favs: (pk) => callApi('get', `users/${pk}/favs`),
 };
 // export const getRooms = () => callApi('get', 'rooms/');

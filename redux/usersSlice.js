@@ -6,12 +6,15 @@ const usersSlice = createSlice({
   initialState: {
     isLoggedIn: false,
     token: null,
+    id: null,
   },
   reducers: {
-    logIn: (state, action) => {
-      (state.isLoggedIn = true), (state.token = action.payload.token);
+    logIn(state, action) {
+      (state.isLoggedIn = true),
+        (state.token = action.payload.token),
+        (state.id = action.payload.pk);
     },
-    logOut: (state, action) => {
+    logOut(state, action) {
       (state.isLoggedIn = false), (state.token = null);
     },
   },
@@ -24,7 +27,7 @@ export const userLogin = (form) => async (dispatch) => {
     const { data } = await api.token(form);
     const { pk, token } = data;
     if (pk && token) {
-      dispatch(logIn({ token }));
+      dispatch(logIn({ token, pk }));
     }
   } catch (error) {
     if (error.message === 'Request failed with status code 401')
@@ -33,6 +36,19 @@ export const userLogin = (form) => async (dispatch) => {
       alert('Wrong email/password');
     }
     console.warn(`${error.name} ${error.message}`);
+  }
+};
+
+export const getFavs = () => async (dispatch, getState) => {
+  try {
+    const {
+      usersReducer: { id },
+    } = getState();
+    console.log(id);
+    const { data } = await api.favs(id);
+    console.log(data);
+  } catch (error) {
+    console.warn(error);
   }
 };
 
