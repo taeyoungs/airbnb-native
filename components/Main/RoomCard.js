@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
 import Swiper from 'react-native-web-swiper';
-import { Image, Dimensions } from 'react-native';
+import { Image, Dimensions, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../colors';
 import utils from '../../utils';
 import { toggleFav } from '../../redux/usersSlice';
+import { useNavigation } from '@react-navigation/native';
 
 const screenHeight = Dimensions.get('screen').height;
 
@@ -52,6 +53,7 @@ const ImageContainer = styled.View`
   width: 100%;
   height: ${screenHeight / 3}px;
   margin-bottom: 10px;
+  z-index: 10;
 `;
 
 const ImageItem = styled.Image`
@@ -59,7 +61,7 @@ const ImageItem = styled.Image`
   height: 100%;
 `;
 
-const DefaultImageContainer = styled.View`
+const DefaultImageContainer = styled.TouchableOpacity`
   width: 100%;
   height: 100%;
   border: 1px solid ${colors.lightGrey};
@@ -82,7 +84,8 @@ const FavsIcon = styled.View`
   border-radius: 40px;
 `;
 
-const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
+const RoomCard = ({ id, isFav, isSuperhost, photos, name, price, roomObj }) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   return (
     <Container>
@@ -107,7 +110,10 @@ const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
           </FavsIcon>
         </FavsContainer>
         {photos.length === 0 ? (
-          <DefaultImageContainer>
+          <DefaultImageContainer
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('RoomDetail', { room: roomObj })}
+          >
             <BlurView
               intensity={20}
               tint="light"
@@ -140,21 +146,35 @@ const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
             }}
           >
             {photos.map((photo) => (
-              <ImageItem key={photo.id} source={{ uri: photo.file }} />
+              <TouchableOpacity
+                key={photo.id}
+                activeOpacity={0.8}
+                onPress={() =>
+                  navigation.navigate('RoomDetail', { room: roomObj })
+                }
+              >
+                <ImageItem source={{ uri: photo.file }} />
+              </TouchableOpacity>
             ))}
           </Swiper>
         )}
       </ImageContainer>
-      {isSuperhost ? (
-        <Superhost>
-          <SuperhostText>superhost</SuperhostText>
-        </Superhost>
-      ) : null}
-      <Name>{name}</Name>
-      <PriceContainer>
-        <PriceNumber>${price} </PriceNumber>
-        <PriceText>/ night</PriceText>
-      </PriceContainer>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => navigation.navigate('RoomDetail', { room: roomObj })}
+        style={{ alignItems: 'flex-start' }}
+      >
+        {isSuperhost ? (
+          <Superhost>
+            <SuperhostText>superhost</SuperhostText>
+          </Superhost>
+        ) : null}
+        <Name>{name}</Name>
+        <PriceContainer>
+          <PriceNumber>${price} </PriceNumber>
+          <PriceText>/ night</PriceText>
+        </PriceContainer>
+      </TouchableOpacity>
     </Container>
   );
 };

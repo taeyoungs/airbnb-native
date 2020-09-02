@@ -13,11 +13,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "kr.youngslog.airbnbApp",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDnKdMOsb2DLRxnXlB79iYITyPu5aQ7HjA"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

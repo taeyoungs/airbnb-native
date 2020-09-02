@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Explorer from '../screens/Main/Explorer';
 import Saved from '../screens/Main/Saved';
 import MapScreen from '../screens/Main/Map';
@@ -7,12 +8,15 @@ import Profile from '../screens/Main/Profile';
 import colors from '../colors';
 import { Ionicons } from '@expo/vector-icons';
 import utils from '../utils';
+import Room from '../screens/Main/Room';
+import BackBtn from '../components/Auth/BackBtn';
 
-const Main = createBottomTabNavigator();
+const TabsNavigator = createBottomTabNavigator();
+const MainNavigator = createStackNavigator();
 
-export default () => {
+const Tabs = () => {
   return (
-    <Main.Navigator
+    <TabsNavigator.Navigator
       tabBarOptions={{
         activeTintColor: colors.red,
         inactiveTintColor: colors.lightGrey,
@@ -48,10 +52,47 @@ export default () => {
         },
       })}
     >
-      <Main.Screen name="Explorer" component={Explorer}></Main.Screen>
-      <Main.Screen name="Saved" component={Saved}></Main.Screen>
-      <Main.Screen name="Map" component={MapScreen}></Main.Screen>
-      <Main.Screen name="Profile" component={Profile}></Main.Screen>
-    </Main.Navigator>
+      <TabsNavigator.Screen
+        name="Explorer"
+        component={Explorer}
+      ></TabsNavigator.Screen>
+      <TabsNavigator.Screen
+        name="Saved"
+        component={Saved}
+      ></TabsNavigator.Screen>
+      <TabsNavigator.Screen
+        name="Map"
+        component={MapScreen}
+      ></TabsNavigator.Screen>
+      <TabsNavigator.Screen
+        name="Profile"
+        component={Profile}
+      ></TabsNavigator.Screen>
+    </TabsNavigator.Navigator>
   );
 };
+
+export default () => (
+  <MainNavigator.Navigator
+    screenOptions={{
+      headerBackTitleVisible: false,
+      headerBackground: () => null,
+      headerTitle: () => null,
+    }}
+    mode="modal"
+  >
+    <MainNavigator.Screen
+      name="Tabs"
+      component={Tabs}
+      options={{ headerShown: false }}
+    />
+    <MainNavigator.Screen
+      name="RoomDetail"
+      component={Room}
+      options={{
+        headerTransparent: true,
+        headerBackImage: () => <BackBtn bg={true} />,
+      }}
+    />
+  </MainNavigator.Navigator>
+);

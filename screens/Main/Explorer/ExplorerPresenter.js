@@ -61,6 +61,7 @@ export default ({ rooms, increasePage }) => {
                 photos={room.photos}
                 name={room.name}
                 price={room.price}
+                roomObj={room}
               />
             ))}
             <TouchableOpacity onPress={increasePage}>
