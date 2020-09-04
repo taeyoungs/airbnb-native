@@ -11,6 +11,7 @@ import { FormBtn } from '../../../components/Auth/FormBtn';
 import { StatusBar } from 'react-native';
 import InputForm from '../../../components/Auth/InputForm';
 import Social from '../../../components/Auth/Social';
+import DismissKeyboard from '../../../components/DismissKeyboard';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -42,7 +43,7 @@ export default ({
   handleSubmit,
 }) => {
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <DismissKeyboard>
       <Container>
         <StatusBar barStyle="dark-content" />
         <Logo source={require('../../../assets/airbnb-logo-txt.png')} />
@@ -82,6 +83,6 @@ export default ({
         </Text>
         <Social />
       </Container>
-    </TouchableWithoutFeedback>
+    </DismissKeyboard>
   );
 };

@@ -1,12 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
 import Explorer from '../screens/Main/Explorer';
 import Saved from '../screens/Main/Saved';
 import MapScreen from '../screens/Main/Map';
 import Profile from '../screens/Main/Profile';
+import Search from '../screens/Main/Search';
 import colors from '../colors';
-import { Ionicons } from '@expo/vector-icons';
 import utils from '../utils';
 import Room from '../screens/Main/Room';
 import BackBtn from '../components/Auth/BackBtn';
@@ -92,6 +93,14 @@ export default () => (
       options={{
         headerTransparent: true,
         headerBackImage: () => <BackBtn bg={true} />,
+      }}
+    />
+    <MainNavigator.Screen
+      name="Search"
+      component={Search}
+      options={{
+        headerTransparent: true,
+        headerBackImage: () => <BackBtn />,
       }}
     />
   </MainNavigator.Navigator>

@@ -1,17 +1,16 @@
 import axios from 'axios';
 
-const callApi = async (method, path, data, jwt) => {
+const callApi = async (method, path, data, jwt, params) => {
   const headers = {
     Authorization: jwt != null ? `Bearer ${jwt}` : null,
     'Content-Type': 'application/json',
   };
-  const baseUrl = 'http://192.168.0.25:8000/api/v1/';
+  // const baseUrl = 'http://192.168.0.25:8000/api/v1/';
+  const baseUrl = 'http://172.30.1.56:8000/api/v1/';
   const fullUrl = `${baseUrl}${path}`;
 
-  // console.log(`${method} ${fullUrl} ${data}`);
-
   if (method === 'get' || method === 'delete') {
-    return axios[method](fullUrl, { headers });
+    return axios[method](fullUrl, { headers, params });
   } else {
     return axios[method](fullUrl, data, { headers });
   }
@@ -25,5 +24,6 @@ export default {
   favs: (pk) => callApi('get', `users/${pk}/favs`),
   toggleFav: (pk, roomId, token) =>
     callApi('put', `users/${pk}/favs/`, { pk: roomId }, token),
+  search: (form, token) => callApi('get', 'rooms/search/', null, token, form),
 };
 // export const getRooms = () => callApi('get', 'rooms/');

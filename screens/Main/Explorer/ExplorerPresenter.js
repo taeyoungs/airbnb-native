@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import RoomCard from '../../../components/Main/RoomCard';
 import colors from '../../../colors';
 
@@ -42,15 +43,18 @@ const LoadMore = styled.View`
 `;
 
 export default ({ rooms, increasePage }) => {
+  const navigation = useNavigation();
   return (
     <Container>
       {rooms.length === 0 ? (
         <ActivityIndicator color="black" />
       ) : (
         <>
-          <FakeBar style={{ ...colors.shadow }}>
-            <FakeText>Search ...</FakeText>
-          </FakeBar>
+          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+            <FakeBar style={{ ...colors.shadow }}>
+              <FakeText>Search ...</FakeText>
+            </FakeBar>
+          </TouchableOpacity>
           <ScrollView showsVerticalScrollIndicator={false}>
             {rooms.map((room) => (
               <RoomCard
