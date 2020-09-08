@@ -7,6 +7,7 @@ import utils from '../../utils';
 import { Ionicons } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
+import MarkerHouse from '../../components/Main/MarkerHouse';
 
 const screenHeight = Dimensions.get('screen').height;
 
@@ -226,10 +227,12 @@ export default ({
               >
                 <Marker
                   coordinate={{
-                    latitude: parseFloat(room.lat),
+                    latitude: parseFloat(room.lat) - 0.003,
                     longitude: parseFloat(room.lng),
                   }}
-                ></Marker>
+                >
+                  <MarkerHouse />
+                </Marker>
               </MapView>
             </MapContainer>
             <MapNotice>

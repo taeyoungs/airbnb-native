@@ -13,7 +13,7 @@ const BgContainer = styled.TouchableOpacity`
   background-color: white;
   justify-content: center;
   align-items: center;
-  border-radius: 100;
+  border-radius: 100px;
   margin-right: 20px;
   margin-top: 5px;
 `;

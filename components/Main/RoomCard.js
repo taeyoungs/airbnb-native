@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
 import Swiper from 'react-native-web-swiper';
-import { Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Dimensions, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../colors';
 import utils from '../../utils';
 import { toggleFav } from '../../redux/usersSlice';
 import { useNavigation } from '@react-navigation/native';
+import BlurDefaultImage from './BlurDefaultImage';
 
 const screenHeight = Dimensions.get('screen').height;
 
@@ -70,8 +70,8 @@ const DefaultImageContainer = styled.TouchableOpacity`
 const FavsContainer = styled.TouchableOpacity`
   position: absolute;
   z-index: 10;
-  right: 10;
-  top: 10;
+  right: 10px;
+  top: 10px;
 `;
 
 const FavsIcon = styled.View`
@@ -114,22 +114,10 @@ const RoomCard = ({ id, isFav, isSuperhost, photos, name, price, roomObj }) => {
             activeOpacity={0.8}
             onPress={() => navigation.navigate('RoomDetail', { room: roomObj })}
           >
-            <BlurView
-              intensity={20}
-              tint="light"
-              style={{
-                flex: 1,
-                width: '100%',
-                height: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Image
-                source={require('../../assets/prepare.png')}
-                style={{ width: 50, height: 50, zIndex: -1 }}
-              />
-            </BlurView>
+            <BlurDefaultImage
+              source={require('../../assets/prepare.png')}
+              style={{ width: 50, height: 50, zIndex: -1 }}
+            />
           </DefaultImageContainer>
         ) : (
           <Swiper
