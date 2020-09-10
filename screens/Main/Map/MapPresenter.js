@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { connect } from 'react-redux';
-import BlurDefaultImage from '../../components/Main/BlurDefaultImage';
+import BlurDefaultImage from '../../../components/Main/BlurDefaultImage';
 import { Ionicons } from '@expo/vector-icons';
-import utils from '../../utils';
-import api from '../../api';
+import utils from '../../../utils';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -108,76 +106,35 @@ const SearchLoading = styled.Image`
   height: 40px;
 `;
 
-const Map = ({ token }) => {
-  const mapRef = useRef();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [rooms, setRooms] = useState([]);
-  const [isDrag, setIsDrag] = useState(false);
-  const handleScroll = (e) => {
-    const { x, y } = e.nativeEvent.contentOffset;
-    setCurrentIndex(Math.abs(Math.round(x / width)));
-  };
-  const handleIsDrag = () => {
-    setIsDrag(true);
-  };
-  const searchAPI = useCallback(async (form) => {
-    const {
-      data: { results },
-    } = await api.search(form, token);
-    // console.log(results);
-    setRooms(results);
-  });
+const NoSearchView = styled.View`
+  position: absolute;
+  bottom: 0;
+  width: ${width - 60}px;
+  background-color: white;
+  height: 70px;
+  border-radius: 10px;
+  flex-direction: row;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+`;
 
-  const handleSearchAgain = async () => {
-    try {
-      setIsLoading(true);
-      const { northEast, southWest } = await mapRef.current?.getMapBoundaries();
-      const { latitude: north, longitude: east } = northEast;
-      const { latitude: south, longitude: west } = southWest;
-      // console.log(north, east, south, west);
-      const form = {
-        north,
-        east,
-        south,
-        west,
-      };
-      searchAPI(form);
-    } catch (error) {
-      console.ware(error);
-    } finally {
-      setIsLoading(false);
-      setIsDrag(false);
-      setCurrentIndex(0);
-    }
-  };
+const NoSearchText = styled.Text`
+  width: 80%;
+  margin-right: 10px;
+`;
 
-  useEffect(() => {
-    const form = {
-      north: 33.52680064998459,
-      east: 126.53596322983503,
-      south: 33.482570936079675,
-      west: 126.50377672165632,
-    };
-    searchAPI(form);
-  }, []);
-  useEffect(() => {
-    if (rooms.length !== 0) {
-      mapRef.current?.animateCamera(
-        {
-          center: {
-            latitude: parseFloat(rooms[currentIndex].lat),
-            longitude: parseFloat(rooms[currentIndex].lng),
-          },
-          zoom: 14,
-          pitch: 0,
-          heading: 0,
-          altitude: 0,
-        },
-        { duration: 500 },
-      );
-    }
-  }, [currentIndex]);
+export default ({
+  mapRef,
+  handleIsDrag,
+  rooms,
+  currentIndex,
+  isDrag,
+  handleSearchAgain,
+  isLoading,
+  handleScroll,
+  svRef,
+}) => {
   return (
     <Container>
       <MapView
@@ -216,7 +173,9 @@ const Map = ({ token }) => {
         <SearchContainer>
           <SearchAgainView onPress={handleSearchAgain}>
             {isLoading ? (
-              <SearchLoading source={require('../../assets/loadingIcon.gif')} />
+              <SearchLoading
+                source={require('../../../assets/loadingIcon.gif')}
+              />
             ) : (
               <>
                 <Ionicons
@@ -231,12 +190,26 @@ const Map = ({ token }) => {
           </SearchAgainView>
         </SearchContainer>
       ) : null}
+      {rooms.length === 0 ? (
+        <NoSearchView>
+          <NoSearchText>
+            There are no search results within this area. Try expanding your
+            search.
+          </NoSearchText>
+          <Ionicons
+            name={`${utils.isAndroid()}eye-off`}
+            size={24}
+            color="black"
+          />
+        </NoSearchView>
+      ) : null}
       <RoomCard
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={25}
+        ref={svRef}
       >
         {rooms.map((room) => (
           <RoomContainer key={room.id}>
@@ -246,7 +219,7 @@ const Map = ({ token }) => {
               ) : (
                 <View style={{ width: 100, height: '100%' }}>
                   <BlurDefaultImage
-                    source={require('../../assets/prepare.png')}
+                    source={require('../../../assets/prepare.png')}
                     style={{ width: 35, height: 35, zIndex: -1 }}
                   />
                 </View>
@@ -267,12 +240,3 @@ const Map = ({ token }) => {
     </Container>
   );
 };
-
-function mapStateToProps(state) {
-  return {
-    rooms: state.roomsReducer.explore.rooms,
-    token: state.usersReducer.token,
-  };
-}
-
-export default connect(mapStateToProps)(Map);
