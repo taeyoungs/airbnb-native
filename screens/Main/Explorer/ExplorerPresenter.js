@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Text,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RoomCard from '../../../components/Main/RoomCard';
@@ -42,7 +43,7 @@ const LoadMore = styled.View`
   margin-top: 10px;
 `;
 
-export default ({ rooms, increasePage }) => {
+export default ({ rooms, increasePage, refreshing, onRefresh, page }) => {
   const navigation = useNavigation();
   return (
     <Container>
@@ -55,7 +56,12 @@ export default ({ rooms, increasePage }) => {
               <FakeText>Search ...</FakeText>
             </FakeBar>
           </TouchableOpacity>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
             {rooms.map((room) => (
               <RoomCard
                 key={room.id}
@@ -70,11 +76,15 @@ export default ({ rooms, increasePage }) => {
             ))}
             <TouchableOpacity onPress={increasePage}>
               <LoadMore>
-                <Text
-                  style={{ color: 'white', fontWeight: '600', fontSize: 15 }}
-                >
-                  Load More
-                </Text>
+                {page * 10 === rooms.length ? (
+                  <Text
+                    style={{ color: 'white', fontWeight: '600', fontSize: 15 }}
+                  >
+                    Load More
+                  </Text>
+                ) : (
+                  <ActivityIndicator color="white" />
+                )}
               </LoadMore>
             </TouchableOpacity>
           </ScrollView>

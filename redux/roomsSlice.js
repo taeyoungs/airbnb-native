@@ -1,6 +1,5 @@
 import api from '../api';
-
-const { createSlice } = require('@reduxjs/toolkit');
+import { createSlice } from '@reduxjs/toolkit';
 
 const roomsSlice = createSlice({
   name: 'rooms',

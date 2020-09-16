@@ -7,15 +7,14 @@ const Container = styled.View`
   margin-left: 20px;
 `;
 
-const BgContainer = styled.TouchableOpacity`
+const BgContainer = styled.View`
   width: 35px;
   height: 35px;
-  background-color: white;
+  background-color: rgb(242, 242, 242);
   justify-content: center;
   align-items: center;
   border-radius: 100px;
-  margin-right: 20px;
-  margin-top: 5px;
+  margin-top: 20px;
 `;
 
 export default ({ bg = false }) => {

@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import Swiper from 'react-native-web-swiper';
-import { Dimensions } from 'react-native';
+import { Dimensions, Animated } from 'react-native';
 import colors from '../../colors';
 import utils from '../../utils';
 import { Ionicons } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
 import MarkerHouse from '../../components/Main/MarkerHouse';
+import RoomHeader from '../../components/Header/RoomHeader';
 
 const screenHeight = Dimensions.get('screen').height;
 
@@ -129,14 +130,36 @@ export default ({
   route: {
     params: { room },
   },
+  navigation,
 }) => {
   const [offsetY, setOffsetY] = useState();
+  const bgAni = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
   const handleScroll = (e) => {
     setOffsetY(e.nativeEvent.contentOffset.y);
+    bgAni.setValue({ x: 0, y: offsetY });
   };
+
+  const AnimateHeaderBackgroundColor = bgAni.y.interpolate({
+    inputRange: [0, 164],
+    outputRange: ['transparent', 'rgb(242, 242, 242)'],
+    extrapolate: 'clamp',
+  });
+
+  const AnimateHeaderBorderColor = bgAni.y.interpolate({
+    inputRange: [0, 164],
+    outputRange: ['transparent', 'rgba(0, 0, 0, 0.1)'],
+    extrapolate: 'clamp',
+  });
   return (
     <>
-      <StatusBar style={`${offsetY > 262 ? 'dark' : 'light'}`} />
+      <StatusBar style={`${offsetY > 164 ? 'dark' : 'light'}`} />
+      <RoomHeader
+        AnimateHeaderBackgroundColor={AnimateHeaderBackgroundColor}
+        AnimateHeaderBorderColor={AnimateHeaderBorderColor}
+        navigation={navigation}
+        isFav={room.is_fav}
+        roomId={room.id}
+      />
       <Container scrollEventThrottle={16} onScroll={handleScroll}>
         <ImageContainer>
           <Swiper

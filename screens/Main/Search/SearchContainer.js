@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SearchPresenter from './SearchPresenter';
 import api from '../../../api';
 
-export default ({ token }) => {
+export default ({ token, navigation }) => {
   const [term, setTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [beds, setBeds] = useState();
@@ -53,6 +53,7 @@ export default ({ token }) => {
       result={result}
       term={term}
       setTerm={setTerm}
+      navigation={navigation}
     />
   );
 };

@@ -1,6 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  TransitionPresets,
+  HeaderStyleInterpolators,
+} from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import Explorer from '../screens/Main/Explorer';
 import Saved from '../screens/Main/Saved';
@@ -11,6 +15,8 @@ import colors from '../colors';
 import utils from '../utils';
 import Room from '../screens/Main/Room';
 import BackBtn from '../components/Auth/BackBtn';
+import Info from '../screens/Main/Info';
+import ProfileHeader from '../components/Header/ProfileHeader';
 
 const TabsNavigator = createBottomTabNavigator();
 const MainNavigator = createStackNavigator();
@@ -81,6 +87,7 @@ export default () => (
       headerTitle: () => null,
     }}
     mode="modal"
+    headerMode="float"
   >
     <MainNavigator.Screen
       name="Tabs"
@@ -91,16 +98,25 @@ export default () => (
       name="RoomDetail"
       component={Room}
       options={{
-        headerTransparent: true,
-        headerBackImage: () => <BackBtn bg={true} />,
+        header: () => null,
       }}
     />
     <MainNavigator.Screen
       name="Search"
       component={Search}
       options={{
-        headerTransparent: true,
-        headerBackImage: () => <BackBtn />,
+        header: () => null,
+      }}
+    />
+    <MainNavigator.Screen
+      name="Info"
+      component={Info}
+      options={{
+        header: ({ scene }) => <ProfileHeader scene={scene} />,
+        headerStyle: {
+          height: 70,
+        },
+        ...TransitionPresets.DefaultTransition,
       }}
     />
   </MainNavigator.Navigator>

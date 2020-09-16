@@ -12,11 +12,18 @@ import { Ionicons } from '@expo/vector-icons';
 import utils from '../../../utils';
 import DismissKeyboard from '../../../components/DismissKeyboard';
 import RoomCard from '../../../components/Main/RoomCard';
+import BackBtn from '../../../components/Auth/BackBtn';
+
+const HeaderContainer = styled.View`
+  background-color: transparent;
+  justify-content: center;
+  height: 60px;
+  padding-top: 20px;
+`;
 
 const Container = styled.View`
   flex: 1;
   padding: 0px 15px;
-  margin-top: 70px;
 `;
 
 const Title = styled.Text`
@@ -125,108 +132,119 @@ export default ({
   result,
   term,
   setTerm,
+  navigation,
 }) => {
   return (
     <DismissKeyboard>
-      <Container>
-        <Title>Search</Title>
-        <SearchBar>
-          <Ionicons
-            name={`${utils.isAndroid()}search`}
-            size={24}
-            color={colors.red}
-            style={{ marginHorizontal: 10 }}
-          />
-          <SearchTextInput
-            placeholder="Search by city ..."
-            returnKeyType="search"
-            value={term}
-            onChangeText={(text) => setTerm(text)}
-            onSubmitEditing={handleSubmit}
-          />
-        </SearchBar>
-        <OptionResetContainer>
-          <Option>Option</Option>
-          <ResetContainer onPress={handleReset}>
-            <Reset>RESET</Reset>
-          </ResetContainer>
-        </OptionResetContainer>
-        <OptionContainer
-          horizontal={true}
-          showsHorizontalScrollIndicator={true}
-          contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
-        >
-          <OptionItem>
-            <OptionLabel>Beds</OptionLabel>
-            <OptionTextInput
-              value={beds}
-              onChangeText={(text) => setBeds(text)}
-              onFocus={() => setBeds()}
-              keyboardType="number-pad"
+      <>
+        <HeaderContainer>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <BackBtn />
+          </TouchableOpacity>
+        </HeaderContainer>
+        <Container>
+          <Title>Search</Title>
+          <SearchBar>
+            <Ionicons
+              name={`${utils.isAndroid()}search`}
+              size={24}
+              color={colors.red}
+              style={{ marginHorizontal: 10 }}
             />
-          </OptionItem>
-          <OptionItem>
-            <OptionLabel>Bedrooms</OptionLabel>
-            <OptionTextInput
-              value={bedrooms}
-              onChangeText={(text) => setBedrooms(text)}
-              onFocus={() => setBedrooms()}
-              keyboardType="number-pad"
+            <SearchTextInput
+              placeholder="Search by city ..."
+              returnKeyType="search"
+              value={term}
+              onChangeText={(text) => setTerm(text)}
+              onSubmitEditing={handleSubmit}
             />
-          </OptionItem>
-          <OptionItem>
-            <OptionLabel>Bathrooms</OptionLabel>
-            <OptionTextInput
-              value={bathrooms}
-              onChangeText={(text) => setBathrooms(text)}
-              onFocus={() => setBathrooms()}
-              keyboardType="number-pad"
-            />
-          </OptionItem>
-          <OptionItem>
-            <OptionLabel>Max. Price</OptionLabel>
-            <OptionTextInput
-              value={maxPrice}
-              onChangeText={(text) => setMaxPrice(text)}
-              onFocus={() => setMaxPrice()}
-              keyboardType="number-pad"
-            />
-          </OptionItem>
-        </OptionContainer>
-        {isLoading ? (
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator color="white" />
-          </View>
-        ) : result.length !== 0 ? (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {result.map((room) => (
-              <RoomCard
-                key={room.id}
-                id={room.id}
-                isFav={room.is_fav}
-                isSuperhost={room.user.superhost}
-                photos={room.photos}
-                name={room.name}
-                price={room.price}
-                roomObj={room}
+          </SearchBar>
+          <OptionResetContainer>
+            <Option>Option</Option>
+            <ResetContainer onPress={handleReset}>
+              <Reset>RESET</Reset>
+            </ResetContainer>
+          </OptionResetContainer>
+          <OptionContainer
+            horizontal={true}
+            showsHorizontalScrollIndicator={true}
+            contentContainerStyle={{
+              paddingVertical: 10,
+              paddingHorizontal: 5,
+            }}
+          >
+            <OptionItem>
+              <OptionLabel>Beds</OptionLabel>
+              <OptionTextInput
+                value={beds}
+                onChangeText={(text) => setBeds(text)}
+                onFocus={() => setBeds()}
+                keyboardType="number-pad"
               />
-            ))}
-            <TouchableOpacity>
-              <LoadMore>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontWeight: '600',
-                    fontSize: 15,
-                  }}
-                >
-                  Load More
-                </Text>
-              </LoadMore>
-            </TouchableOpacity>
-          </ScrollView>
-        ) : null}
-      </Container>
+            </OptionItem>
+            <OptionItem>
+              <OptionLabel>Bedrooms</OptionLabel>
+              <OptionTextInput
+                value={bedrooms}
+                onChangeText={(text) => setBedrooms(text)}
+                onFocus={() => setBedrooms()}
+                keyboardType="number-pad"
+              />
+            </OptionItem>
+            <OptionItem>
+              <OptionLabel>Bathrooms</OptionLabel>
+              <OptionTextInput
+                value={bathrooms}
+                onChangeText={(text) => setBathrooms(text)}
+                onFocus={() => setBathrooms()}
+                keyboardType="number-pad"
+              />
+            </OptionItem>
+            <OptionItem>
+              <OptionLabel>Max. Price</OptionLabel>
+              <OptionTextInput
+                value={maxPrice}
+                onChangeText={(text) => setMaxPrice(text)}
+                onFocus={() => setMaxPrice()}
+                keyboardType="number-pad"
+              />
+            </OptionItem>
+          </OptionContainer>
+          {isLoading ? (
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator color="white" />
+            </View>
+          ) : result.length !== 0 ? (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {result.map((room) => (
+                <RoomCard
+                  key={room.id}
+                  id={room.id}
+                  isFav={room.is_fav}
+                  isSuperhost={room.user.superhost}
+                  photos={room.photos}
+                  name={room.name}
+                  price={room.price}
+                  roomObj={room}
+                />
+              ))}
+              <TouchableOpacity>
+                <LoadMore>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontWeight: '600',
+                      fontSize: 15,
+                    }}
+                  >
+                    Load More
+                  </Text>
+                </LoadMore>
+              </TouchableOpacity>
+            </ScrollView>
+          ) : null}
+        </Container>
+      </>
     </DismissKeyboard>
   );
 };

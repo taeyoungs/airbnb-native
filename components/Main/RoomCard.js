@@ -84,15 +84,35 @@ const FavsIcon = styled.View`
   border-radius: 40px;
 `;
 
-const RoomCard = ({ id, isFav, isSuperhost, photos, name, price, roomObj }) => {
+const RoomCard = ({
+  id,
+  isFav,
+  isSuperhost,
+  photos,
+  name,
+  price,
+  roomObj,
+  search = false,
+}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [fav, setFav] = useState(isFav);
+  const handleToggleFav = () => {
+    setFav((prevState) => !prevState);
+  };
   return (
     <Container>
       <ImageContainer>
-        <FavsContainer onPress={() => dispatch(toggleFav(id))}>
+        <FavsContainer
+          onPress={() => {
+            if (search) {
+              handleToggleFav();
+            }
+            dispatch(toggleFav(id));
+          }}
+        >
           <FavsIcon>
-            {isFav ? (
+            {(search ? fav : isFav) ? (
               <Ionicons
                 name={`${utils.isAndroid()}heart`}
                 size={24}
