@@ -6,7 +6,7 @@ const callApi = async (method, path, data, jwt, params) => {
     'Content-Type': 'application/json',
   };
   // const baseUrl = 'http://192.168.0.25:8000/api/v1/';
-  const baseUrl = 'http://172.30.1.47:8000/api/v1/';
+  const baseUrl = 'http://172.30.1.19:8000/api/v1/';
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {

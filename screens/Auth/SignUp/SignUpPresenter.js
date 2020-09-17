@@ -4,11 +4,9 @@ import {
   Text,
   Dimensions,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
+  StatusBar,
 } from 'react-native';
 import { FormBtn } from '../../../components/Auth/FormBtn';
-import { StatusBar } from 'react-native';
 import InputForm from '../../../components/Auth/InputForm';
 import Social from '../../../components/Auth/Social';
 import DismissKeyboard from '../../../components/DismissKeyboard';

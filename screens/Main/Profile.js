@@ -108,7 +108,7 @@ const Profile = ({ getUser, user, navigation }) => {
       </AvatarContainer>
       <InfoContainer>
         <Info>Account Manangement</Info>
-        <ProfileContainer onPress={() => navigation.navigate('Info')}>
+        <ProfileContainer onPress={() => navigation.navigate('Info', { user })}>
           <ProfileText>Personal Info</ProfileText>
           <Ionicons
             name="ios-information-circle-outline"
