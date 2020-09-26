@@ -102,11 +102,7 @@ export default ({
   const [isGenVisible, setIsGenVisible] = useState(false);
   const [isBirVisible, setIsBirVisible] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || birth;
-    setBirth(currentDate);
-  };
+  const [offsetY, setOffsetY] = useState(0);
 
   useEffect(() => {
     navigation.setOptions({
@@ -116,14 +112,24 @@ export default ({
           isChanged={isChanged}
           firstName={firstName}
           lastName={lastName}
+          offsetY={offsetY}
         />
       ),
     });
-  }, [isChanged]);
+  }, [isChanged, offsetY]);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || birth;
+    setBirth(currentDate);
+  };
+
+  const handleHeaderBorder = (e) => {
+    setOffsetY(e.nativeEvent.contentOffset.y);
+  };
 
   return (
     <>
-      <Container>
+      <Container onScroll={handleHeaderBorder} scrollEventThrottle={25}>
         <Title>Edit Profile</Title>
         <ProfileContainer>
           <NameInput

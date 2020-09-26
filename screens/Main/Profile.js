@@ -134,7 +134,7 @@ const Profile = ({ getUser, user, navigation, logOut }) => {
             color="rgba(0, 0, 0, 0.7)"
           />
         </ProfileContainer>
-        <AlertContainer>
+        <AlertContainer onPress={() => navigation.navigate('PushAlert')}>
           <AlertText>Alert</AlertText>
           <Ionicons
             name="ios-notifications-outline"

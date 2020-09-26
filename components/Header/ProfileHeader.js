@@ -12,12 +12,15 @@ const Container = styled.View`
   left: 0;
   width: 100%;
   background-color: white;
-  height: 70px;
+  height: 75px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 0px 15px;
   padding-top: 30px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${(props) =>
+    props.offsetY > 0 ? 'rgba(0,0,0,0.1)' : 'transparent'};
 `;
 
 const BackButton = styled.TouchableOpacity`
@@ -30,7 +33,7 @@ const SaveText = styled.Text`
   text-decoration: underline;
 `;
 
-export default ({ scene, isChanged, firstName, lastName }) => {
+export default ({ scene, isChanged, firstName, lastName, offsetY }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const progress = Animated.add(
@@ -69,7 +72,7 @@ export default ({ scene, isChanged, firstName, lastName }) => {
     );
   return (
     <Animated.View style={{ opacity }}>
-      <Container>
+      <Container offsetY={offsetY}>
         <BackButton
           onPress={() =>
             isChanged ? createTwoButtonAlert() : navigation.goBack()
