@@ -21,7 +21,7 @@ const Logo = styled.Image`
 `;
 
 const InputContainer = styled.View`
-  width: ${windowWidth / 1.3};
+  width: ${windowWidth / 1.3}px;
   margin-bottom: 30px;
 `;
 

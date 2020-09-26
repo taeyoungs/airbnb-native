@@ -38,6 +38,7 @@ export default ({
   placeholder,
   setIsGenVisible,
   setIsBirVisible,
+  setIsChanged,
 }) => {
   const inputRef = useRef();
   const [isOn, setIsOn] = useState(false);
@@ -49,7 +50,10 @@ export default ({
           ref={inputRef}
           placeholder={placeholder}
           value={value}
-          onChangeText={(text) => setValue(text)}
+          onChangeText={(text) => {
+            setValue(text);
+            setIsChanged(true);
+          }}
           onFocus={() => {
             setIsOn(true);
             setIsGenVisible(false);

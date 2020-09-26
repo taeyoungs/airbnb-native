@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
+import { Alert, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { getUser } from '../../redux/usersSlice';
-import colors from '../../colors';
 import { Ionicons } from '@expo/vector-icons';
+import colors from '../../colors';
+import { getUser, logOut } from '../../redux/usersSlice';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -58,7 +59,7 @@ const ProfileText = styled.Text`
   font-weight: 300;
 `;
 
-const Alert = styled.TouchableOpacity`
+const AlertContainer = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -95,11 +96,28 @@ const Version = styled.Text`
   font-size: 10px;
 `;
 
-const Profile = ({ getUser, user, navigation }) => {
+const Profile = ({ getUser, user, navigation, logOut }) => {
   useEffect(() => {
     getUser();
   }, []);
-  // console.log(user);
+
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      'Alert Title',
+      'My Alert Msg',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => logOut(),
+        },
+      ],
+      { cancelable: false },
+    );
   return (
     <Container>
       <AvatarContainer>
@@ -116,15 +134,15 @@ const Profile = ({ getUser, user, navigation }) => {
             color="rgba(0, 0, 0, 0.7)"
           />
         </ProfileContainer>
-        <Alert>
+        <AlertContainer>
           <AlertText>Alert</AlertText>
           <Ionicons
             name="ios-notifications-outline"
             size={34}
             color="rgba(0, 0, 0, 0.7)"
           />
-        </Alert>
-        <Logout>
+        </AlertContainer>
+        <Logout onPress={createTwoButtonAlert}>
           <LogoutText>Log Out</LogoutText>
           <Ionicons name="ios-log-out" size={30} color={colors.teal} />
         </Logout>
@@ -137,6 +155,7 @@ const Profile = ({ getUser, user, navigation }) => {
 function mapDispatchToProps(dispatch) {
   return {
     getUser: () => dispatch(getUser()),
+    logOut: () => dispatch(logOut()),
   };
 }
 

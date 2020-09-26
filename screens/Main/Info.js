@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, TouchableOpacity, BackHandler } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-community/picker';
 import Modal from 'react-native-modal';
 import styled from 'styled-components';
 import colors from '../../colors';
 import NameInput from '../../components/Main/NameInput';
+import ProfileHeader from '../../components/Header/ProfileHeader';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -13,6 +14,7 @@ const Container = styled.ScrollView`
   background-color: white;
   height: 100%;
   padding: 0px 20px;
+  margin-top: 70px;
 `;
 
 const Title = styled.Text`
@@ -91,6 +93,7 @@ export default ({
   route: {
     params: { user },
   },
+  navigation,
 }) => {
   const [firstName, setFirstName] = useState(user.first_name);
   const [lastName, setLastName] = useState(user.last_name);
@@ -98,11 +101,25 @@ export default ({
   const [birth, setBirth] = useState(new Date('1994-05-03'));
   const [isGenVisible, setIsGenVisible] = useState(false);
   const [isBirVisible, setIsBirVisible] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || birth;
     setBirth(currentDate);
   };
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: ({ scene }) => (
+        <ProfileHeader
+          scene={scene}
+          isChanged={isChanged}
+          firstName={firstName}
+          lastName={lastName}
+        />
+      ),
+    });
+  }, [isChanged]);
 
   return (
     <>
@@ -116,6 +133,7 @@ export default ({
             setValue={setLastName}
             setIsGenVisible={setIsGenVisible}
             setIsBirVisible={setIsBirVisible}
+            setIsChanged={setIsChanged}
           />
           <NameInput
             placeholder="First Name Input"
@@ -124,6 +142,7 @@ export default ({
             setValue={setFirstName}
             setIsGenVisible={setIsGenVisible}
             setIsBirVisible={setIsBirVisible}
+            setIsChanged={setIsChanged}
           />
           <TouchableOpacity
             onPress={() => {
@@ -176,7 +195,7 @@ export default ({
             onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
             itemStyle={{ color: colors.teal }}
           >
-            <Picker.Item label="Empty" value="empty" />
+            <Picker.Item label="Empty" value="" />
             <Picker.Item label="Male" value="male" />
             <Picker.Item label="Female" value="female" />
             <Picker.Item label="Other" value="other" />

@@ -22,10 +22,16 @@ const usersSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
     },
+    setInfo(state, action) {
+      const { user } = state;
+      const { first_name, last_name } = action.payload;
+      user.first_name = first_name;
+      user.last_name = last_name;
+    },
   },
 });
 
-export const { logIn, logOut, setUser } = usersSlice.actions;
+export const { logIn, logOut, setUser, setInfo } = usersSlice.actions;
 
 export const userLogin = (form) => async (dispatch) => {
   try {
@@ -77,6 +83,19 @@ export const getUser = () => async (dispatch, getState) => {
   try {
     const { data } = await api.getUser(id);
     dispatch(setUser(data));
+  } catch (error) {
+    console.warn(error);
+  }
+};
+
+export const updateInfo = (form) => async (dispatch, getState) => {
+  const {
+    usersReducer: { id, token },
+  } = getState();
+  dispatch(setInfo(form));
+  try {
+    const { status } = await api.updateUser(id, form, token);
+    console.log(status);
   } catch (error) {
     console.warn(error);
   }

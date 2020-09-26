@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   createStackNavigator,
   TransitionPresets,
-  HeaderStyleInterpolators,
 } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import Explorer from '../screens/Main/Explorer';
@@ -14,9 +13,9 @@ import Search from '../screens/Main/Search';
 import colors from '../colors';
 import utils from '../utils';
 import Room from '../screens/Main/Room';
-import BackBtn from '../components/Auth/BackBtn';
 import Info from '../screens/Main/Info';
 import ProfileHeader from '../components/Header/ProfileHeader';
+import PushAlert from '../screens/Main/PushAlert';
 
 const TabsNavigator = createBottomTabNavigator();
 const MainNavigator = createStackNavigator();
@@ -112,10 +111,13 @@ export default () => (
       name="Info"
       component={Info}
       options={{
-        header: ({ scene }) => <ProfileHeader scene={scene} />,
-        headerStyle: {
-          height: 70,
-        },
+        ...TransitionPresets.DefaultTransition,
+      }}
+    />
+    <MainNavigator.Screen
+      name="PushAlert"
+      component={PushAlert}
+      options={{
         ...TransitionPresets.DefaultTransition,
       }}
     />

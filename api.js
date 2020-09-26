@@ -6,7 +6,7 @@ const callApi = async (method, path, data, jwt, params) => {
     'Content-Type': 'application/json',
   };
   // const baseUrl = 'http://192.168.0.25:8000/api/v1/';
-  const baseUrl = 'http://172.30.1.19:8000/api/v1/';
+  const baseUrl = 'http://172.20.10.2:8000/api/v1/';
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {
@@ -26,4 +26,6 @@ export default {
     callApi('put', `users/${pk}/favs/`, { pk: roomId }, token),
   search: (form, token) => callApi('get', 'rooms/search/', null, token, form),
   getUser: (pk) => callApi('get', `users/${pk}/`),
+  updateUser: (pk, form, token) =>
+    callApi('patch', `users/${pk}/`, form, token, null),
 };
