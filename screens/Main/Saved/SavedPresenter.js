@@ -34,6 +34,7 @@ export default ({ rooms }) => {
               photos={room.photos}
               name={room.name}
               price={room.price}
+              roomObj={room}
             />
           ))}
         </ScrollV>

@@ -138,7 +138,7 @@ export default ({
     setOffsetY(e.nativeEvent.contentOffset.y);
     bgAni.setValue({ x: 0, y: offsetY });
   };
-
+  // console.log(room);
   const AnimateHeaderBackgroundColor = bgAni.y.interpolate({
     inputRange: [0, 164],
     outputRange: ['transparent', 'rgb(242, 242, 242)'],
