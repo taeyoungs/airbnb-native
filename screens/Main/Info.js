@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, TouchableOpacity, BackHandler } from 'react-native';
+import { Dimensions, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-community/picker';
 import Modal from 'react-native-modal';
@@ -8,7 +8,9 @@ import colors from '../../colors';
 import NameInput from '../../components/Main/NameInput';
 import ProfileHeader from '../../components/Header/ProfileHeader';
 
-const { width, height } = Dimensions.get('screen');
+// ToDo: DateTimePicker 제대로 동작하지 않음
+
+const { width } = Dimensions.get('screen');
 
 const Container = styled.ScrollView`
   background-color: white;
@@ -215,11 +217,6 @@ export default ({
               <ConfirmText>Confirm</ConfirmText>
             </ConfirmButton>
           </Confirm>
-          <DateTimePicker
-            value={birth}
-            textColor={colors.teal}
-            onChange={onChange}
-          />
         </SelectContainer>
       </Modal>
     </>

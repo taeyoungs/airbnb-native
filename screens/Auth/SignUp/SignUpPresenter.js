@@ -6,7 +6,7 @@ import {
   KeyboardAvoidingView,
   StatusBar,
 } from 'react-native';
-import { FormBtn } from '../../../components/Auth/FormBtn';
+import FormBtn from '../../../components/Auth/FormBtn';
 import InputForm from '../../../components/Auth/InputForm';
 import Social from '../../../components/Auth/Social';
 import DismissKeyboard from '../../../components/DismissKeyboard';
@@ -21,7 +21,7 @@ const Container = styled.View`
 const Logo = styled.Image`
   width: 150px;
   height: 40px;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
   margin-top: 100px;
 `;
 
@@ -74,12 +74,6 @@ export default ({
             <FormBtn accent={true} title="Sign Up" onPress={handleSubmit} />
           </InputContainer>
         </KeyboardAvoidingView>
-        <Text
-          style={{ color: 'grey', textAlign: 'center', marginVertical: 25 }}
-        >
-          - Or sign up with -
-        </Text>
-        <Social />
       </Container>
     </DismissKeyboard>
   );
