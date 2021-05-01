@@ -5,7 +5,10 @@ import FormBtn from '../../../components/Auth/FormBtn';
 import InputForm from '../../../components/Auth/InputForm';
 import Social from '../../../components/Auth/Social';
 import colors from '../../../colors';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -56,16 +59,21 @@ const SignInPresenter = ({
               secureTextEntry={true}
             />
             <FormBtn accent={true} title="Sign In" onPress={handleSubmit} />
-            <Text style={{ color: 'grey', textAlign: 'center', marginTop: 35 }}>
-              Don't have an account?
-              <Text
-                style={{ color: colors.teal, fontWeight: '600' }}
-                onPress={goToSignUp}
-              >
-                {' '}
-                Sign Up
-              </Text>
-            </Text>
+            <View
+              style={{
+                justifyContent: 'center',
+                marginTop: 35,
+                flexDirection: 'row',
+              }}
+            >
+              <Text style={{ color: 'grey' }}>Don't have an account?</Text>
+              <TouchableOpacity onPress={goToSignUp}>
+                <Text style={{ color: colors.teal, fontWeight: '600' }}>
+                  {' '}
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
+            </View>
           </InputContainer>
         </View>
       </TouchableWithoutFeedback>

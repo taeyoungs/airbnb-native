@@ -46,18 +46,13 @@ export default ({ scene, isChanged, firstName, lastName, offsetY }) => {
     outputRange: [0, 1, 0],
   });
 
-  const createTwoButtonAlert = () =>
+  const createTwoButtonAlert = (title, msg) =>
     Alert.alert(
-      'Alert Title',
-      'My Alert Msg',
+      title,
+      msg,
       [
         {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
+          text: '저장',
           onPress: () => {
             const form = {
               first_name: firstName,
@@ -67,6 +62,11 @@ export default ({ scene, isChanged, firstName, lastName, offsetY }) => {
             dispatch(updateInfo(form));
           },
         },
+        {
+          text: '삭제',
+          onPress: () => navigation.goBack(),
+          style: 'cancel',
+        },
       ],
       { cancelable: false },
     );
@@ -75,7 +75,12 @@ export default ({ scene, isChanged, firstName, lastName, offsetY }) => {
       <Container offsetY={offsetY}>
         <BackButton
           onPress={() =>
-            isChanged ? createTwoButtonAlert() : navigation.goBack()
+            isChanged
+              ? createTwoButtonAlert(
+                  '저장하지 않은 변경사항',
+                  '프로필의 변경사항을 저장하시겠어요?',
+                )
+              : navigation.goBack()
           }
         >
           <Ionicons name="ios-arrow-back" size={24} color="black" />

@@ -3,8 +3,8 @@ import utils from '../../../utils';
 import SignInPresenter from './SignInPresenter';
 
 export default ({ navigation, route: { params }, userLogin }) => {
-  const [email, setEmail] = useState(params?.email || 'xoxodudwkd@naver.com');
-  const [password, setPassword] = useState(params?.password || '12345');
+  const [email, setEmail] = useState(params?.email || '');
+  const [password, setPassword] = useState(params?.password || '');
   const goToSignUp = () => navigation.navigate('SignUp');
   const isFormValid = () => {
     if (email === '' || password === '') {

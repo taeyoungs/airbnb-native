@@ -103,16 +103,16 @@ const Profile = ({ getUser, user, navigation, logOut }) => {
 
   const createTwoButtonAlert = () =>
     Alert.alert(
-      'Alert Title',
-      'My Alert Msg',
+      '로그아웃',
+      '정말 로그아웃 하시겠어요?',
       [
         {
-          text: 'Cancel',
+          text: '취소',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
-          text: 'OK',
+          text: '확인',
           onPress: () => logOut(),
         },
       ],
